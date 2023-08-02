@@ -4,7 +4,7 @@ class TaskController {
   List<TaskModel> tasks = [];
   
 
-  Future<void> addTask(TaskModel task) async {
+  void addTask(TaskModel task){
     tasks.add(task);
     print("Task Added");
   }
@@ -30,8 +30,12 @@ class TaskController {
     return pendingTasks;
   }
 
-  Future<void> updateTask(String title, String description, String dueDate,
-      String status, int task_id) async {
+  void updateTask(String title, String description, String dueDate,
+      String status, int task_id)  {
+        if( task_id < 0 || task_id >= tasks.length){
+          print("Invalid Task Id");
+          return;
+        }
     tasks[task_id].title = title;
     tasks[task_id].description = description;
     tasks[task_id].dueDate = dueDate;
@@ -39,7 +43,11 @@ class TaskController {
     print("Task Updated");
   }
 
-  Future<void> deleteTask(int task_id) async {
+  void deleteTask(int task_id)  {
+    if( task_id < 0 || task_id >= tasks.length){
+          print("Invalid Task Id");
+          return;
+        }
     tasks.removeAt(task_id);
     print("Task Removed");
   }
