@@ -32,6 +32,10 @@ class TaskController {
 
   void updateTask(String title, String description, String dueDate,
       String status, int task_id)  {
+        if( task_id < 0 || task_id >= tasks.length){
+          print("Invalid Task Id");
+          return;
+        }
     tasks[task_id].title = title;
     tasks[task_id].description = description;
     tasks[task_id].dueDate = dueDate;
@@ -40,6 +44,10 @@ class TaskController {
   }
 
   void deleteTask(int task_id)  {
+    if( task_id < 0 || task_id >= tasks.length){
+          print("Invalid Task Id");
+          return;
+        }
     tasks.removeAt(task_id);
     print("Task Removed");
   }
