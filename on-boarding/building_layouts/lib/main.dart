@@ -1,3 +1,4 @@
+
 import 'package:building_layouts/todo_list/todo_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,10 +19,17 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(390, 844),
       builder: (_, __) {
-        return const MaterialApp(
+        return MaterialApp(
           debugShowCheckedModeBanner: false,
+          initialRoute: '/',
+          routes: {
+            '/': (context) => const OnboardingPage(),
+            "/home": (context) => const TodoListPage(),
+            "/add_task": (context) => const AddTaskPage(),
+            "/task_detail": (context) => const TaskDetailPage(),
+            
+          },
           title: 'Task Manager',
-          home: TaskDetailPage(),
         );
       },
     );

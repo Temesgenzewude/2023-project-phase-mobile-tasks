@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../controller/todo_controller.dart';
+import '../models/todo_model.dart';
+import '../task_detail/task_detail.dart';
 import 'listview_item.dart';
 
-class TodoListPage extends StatelessWidget {
+class TodoListPage extends StatefulWidget {
   const TodoListPage({super.key});
 
   @override
+  State<TodoListPage> createState() => _TodoListPageState();
+}
+
+class _TodoListPageState extends State<TodoListPage> {
+  @override
   Widget build(BuildContext context) {
+    List<TodoModel> todos = TodoController.todos;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -19,11 +28,6 @@ class TodoListPage extends StatelessWidget {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(
-                    Icons.arrow_back_ios,
-                    color: const Color(0xFFEE6F57),
-                    size: 30.h,
-                  ),
                   Text("Todo List",
                       style: TextStyle(
                           color: Colors.black,
@@ -63,57 +67,152 @@ class TodoListPage extends StatelessWidget {
           child: MediaQuery.removePadding(
             context: context,
             removeTop: true,
-            child: ListView(
+            child: ListView.builder(
+              itemCount: todos.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin:
+                      EdgeInsets.only(left: 15.w, right: 15.w, bottom: 15.h),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50.h),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset:
+                              const Offset(1, 1), // changes position of shadow
+                        ),
+                      ]),
+                  child: ListTile(
+                    onTap: () {
+                      updateTodo(context, index);
+                    },
+                    // leading: Column(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     Container(
+                    //       height: 40.h,
+                    //       width: 40.h,
+                    //       decoration: BoxDecoration(
+                    //         borderRadius: BorderRadius.circular(20.h),
+                    //         color: Colors.white,
+                    //         boxShadow: [
+                    //           BoxShadow(
+                    //             color: Colors.grey.withOpacity(0.1),
+                    //             spreadRadius: 1,
+                    //             blurRadius: 2,
+                    //             offset: const Offset(
+                    //                 1, 1), // changes position of shadow
+                    //           ),
+                    //         ],
+                    //       ),
+                    //       child: Center(
+                    //         child: Text(
+                    //           "U",
+                    //           style: TextStyle(
+                    //               color: Colors.black,
+                    //               fontFamily: "InterMedium",
+                    //               fontSize: 14.sp),
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          todos[index].title,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: "InterSemiBold",
+                              fontSize: 14.sp),
+                        ),
+                        Text(
+                          "Apr 20,2023",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: "InterRegular",
+                              fontSize: 12.sp),
+                        ),
+                      ],
+                    ),
+                    subtitle: Text(
+                      todos[index].description,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "InterRegular",
+                          fontSize: 12.sp),
+                    ),
+                  ),
+                );
+              },
               scrollDirection: Axis.vertical,
-              children: [
-                ListViewItem(
-                  leading: 'U',
-                  subtitle: 'Design',
-                  title: 'UI/UX App',
-                  trailingColor: const Color(0xFFEE6F57),
-                ),
-                ListViewItem(
-                  leading: 'U',
-                  subtitle: 'Design',
-                  title: 'UI/UX App',
-                  trailingColor: Colors.green,
-                ),
-                ListViewItem(
-                  leading: 'V',
-                  subtitle: "",
-                  title: 'View Candidates',
-                  trailingColor: Color.fromARGB(255, 230, 245, 19),
-                ),
-                ListViewItem(
-                  leading: 'F',
-                  subtitle: 'Drybling',
-                  title: 'Football Cup',
-                  trailingColor: Color(0xFFEE6F57),
-                ),
-              ],
             ),
           ),
         ),
         SizedBox(height: 30.h),
-        Container(
-          height: 50.h,
-          width: 256.w,
-          margin: EdgeInsets.only(bottom: 30.h),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5.r),
-              color: const Color(0xFFEE6F57)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Create Task',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 19.sp,
-                      fontFamily: "InterBold")),
-            ],
+        GestureDetector(
+          onTap: () => addTodo(context),
+          child: Container(
+            height: 50.h,
+            width: 256.w,
+            margin: EdgeInsets.only(bottom: 30.h),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5.r),
+                color: const Color(0xFFEE6F57)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Create Task',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 19.sp,
+                        fontFamily: "InterBold")),
+              ],
+            ),
           ),
         ),
       ]),
     );
+  }
+
+  void addTodo(BuildContext context) async {
+    final result = await Navigator.pushNamed(
+      context,
+      '/add_task'
+    ) as TodoModel;
+    if (!mounted) return;
+
+    if (result != null) {
+      setState(() {
+        TodoController().addTodo(result);
+      });
+
+      ScaffoldMessenger.of(context)
+        ..removeCurrentSnackBar()
+        ..showSnackBar(
+            const SnackBar(content: Text('Task added successfully')));
+    }
+  }
+
+  void updateTodo(BuildContext context, int index) async {
+    final result = await Navigator.pushNamed(
+      context,
+      '/task_detail',
+      arguments: index,
+    ) as TodoModel;
+    if (!mounted) return;
+    if (result != null) {
+      setState(() {
+        TodoController.todos[index] = result;
+      });
+      ScaffoldMessenger.of(context)
+        ..removeCurrentSnackBar()
+        ..showSnackBar(
+            const SnackBar(content: Text('Task updated successfully')));
+    }
   }
 }

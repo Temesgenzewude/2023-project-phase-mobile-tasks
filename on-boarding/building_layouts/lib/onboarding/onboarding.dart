@@ -15,21 +15,26 @@ class OnboardingPage extends StatelessWidget {
           Image.asset('assets/images/onboarding.png',
               height: 480.h, width: 480.h),
           SizedBox(height: 136.h),
-          Container(
-            height: 50.h,
-            width: 256.w,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5.r),
-                color: const Color(0xFF0C8CE9)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Get Started',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 19.sp,
-                        fontFamily: "InterBold")),
-              ],
+          GestureDetector(
+            onTap: () {
+              Navigator.popAndPushNamed(context, "/home", arguments: ['home']);
+            },
+            child: Container(
+              height: 50.h,
+              width: 256.w,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5.r),
+                  color: const Color(0xFF0C8CE9)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Get Started',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 19.sp,
+                          fontFamily: "InterBold")),
+                ],
+              ),
             ),
           ),
         ]),
