@@ -55,7 +55,7 @@ Usage:
 
         Viewing Todos:
         The Todo App displays a list of all your todos on the home page.
-    ![Onboarding Page](image-4.png)
+![Onboarding Page](image-4.png)
 
         After the app is installed, you will see an onboarding page like above. 
         Click the "Get Started" button to go to the home page. Then you will see the the list of todos and button to add new todo.
@@ -63,12 +63,12 @@ Usage:
 
         Adding a Todo:
 
-        ![Task List Page](image-2.png)
+![Task List Page](image-2.png)
         To add a new todo, follow these steps:
 
         Open the Todo App on your device or emulator.
         Click the  "Create task" button at the bottom of home page as shown in the above screenshot. Then you will be redirected to the following page.
-        ![Create Task Page](image.png)
+![Create Task Page](image.png)
         Type your todo description and title  into the input field as shown above.
 
 
@@ -79,7 +79,7 @@ Usage:
     To update a todo, follow these steps:
 
     Click the todo you want to update from the list of todos. Then you will be redirected to the following page.
-    ![Update Task Page](image-1.png)
+![Update Task Page](image-1.png)
 
     Modify the description and title as needed.
     Once you are done,  tap the "Update task" button to save the changes. Then you will be redirected to the home page where you can see the updated todo.
