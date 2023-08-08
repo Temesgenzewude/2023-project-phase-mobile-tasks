@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/controller/todo_controller.dart';
 import '../../../../core/models/todo_model.dart';
+import '../../../update_todo/presentation/pages/task_detail.dart';
 
 class TodoListPage extends StatefulWidget {
   const TodoListPage({super.key});
@@ -85,43 +86,21 @@ class _TodoListPageState extends State<TodoListPage> {
                       ]),
                   child: ListTile(
                     onTap: () {
-                      updateTodo(context, index);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TaskDetailPage(),
+                          settings: RouteSettings(
+                            arguments: index,
+                          ),
+                        ),
+                      );
                     },
-                    // leading: Column(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     Container(
-                    //       height: 40.h,
-                    //       width: 40.h,
-                    //       decoration: BoxDecoration(
-                    //         borderRadius: BorderRadius.circular(20.h),
-                    //         color: Colors.white,
-                    //         boxShadow: [
-                    //           BoxShadow(
-                    //             color: Colors.grey.withOpacity(0.1),
-                    //             spreadRadius: 1,
-                    //             blurRadius: 2,
-                    //             offset: const Offset(
-                    //                 1, 1), // changes position of shadow
-                    //           ),
-                    //         ],
-                    //       ),
-                    //       child: Center(
-                    //         child: Text(
-                    //           "U",
-                    //           style: TextStyle(
-                    //               color: Colors.black,
-                    //               fontFamily: "InterMedium",
-                    //               fontSize: 14.sp),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
                     title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
+                          key: Key("todoListPageTodoTitle$index"),
                           todos[index].title,
                           style: TextStyle(
                               color: Colors.black,
@@ -129,6 +108,7 @@ class _TodoListPageState extends State<TodoListPage> {
                               fontSize: 14.sp),
                         ),
                         Text(
+                          key: Key("todoListPageTodoDeadline$index"),
                           "Apr 20,2023",
                           style: TextStyle(
                               color: Colors.black,

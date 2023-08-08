@@ -89,6 +89,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
                 borderRadius: BorderRadius.circular(5.r),
                 border: Border.all(color: const Color(0xFFF1EEEE))),
             child: TextField(
+              key: const Key("todoDetailPageTodoTileTextField"),
               controller: _titleController,
               style: TextStyle(
                   color: Colors.black,
@@ -224,7 +225,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
             },
             child: Container(
               height: 50.h,
-              width: 180.w,
+              width: 250.w,
               margin: EdgeInsets.only(bottom: 30.h, top: 40.h),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.r),
