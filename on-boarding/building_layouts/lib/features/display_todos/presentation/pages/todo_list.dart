@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../controller/todo_controller.dart';
-import '../models/todo_model.dart';
-import '../task_detail/task_detail.dart';
-import 'listview_item.dart';
+import '../../../../core/controller/todo_controller.dart';
+import '../../../../core/models/todo_model.dart';
 
 class TodoListPage extends StatefulWidget {
   const TodoListPage({super.key});
@@ -180,10 +178,7 @@ class _TodoListPageState extends State<TodoListPage> {
   }
 
   void addTodo(BuildContext context) async {
-    final result = await Navigator.pushNamed(
-      context,
-      '/add_task'
-    ) as TodoModel;
+    final result = await Navigator.pushNamed(context, '/add_task') as TodoModel;
     if (!mounted) return;
 
     if (result != null) {

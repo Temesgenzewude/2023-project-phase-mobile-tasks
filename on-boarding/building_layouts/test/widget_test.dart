@@ -1,30 +1,52 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
+import 'package:building_layouts/features/add_todo/presentation/pages/add_task.dart';
+import 'package:building_layouts/core/controller/todo_controller.dart';
+import 'package:building_layouts/core/models/todo_model.dart';
+import 'package:building_layouts/features/onboarding/presentation/pages/onboarding.dart';
+import 'package:building_layouts/features/update_todo/presentation/pages/task_detail.dart';
+import 'package:building_layouts/features/display_todos/presentation/pages/todo_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:building_layouts/main.dart';
-
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets("Tapping the Get Started button will navigate to TodoListPage",
+      (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: OnboardingPage(),
+      ),
+    );
+    final findsButton = find.text('Get Started');
+    await tester.tap(findsButton);
+    await tester.pumpAndSettle();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.byType(TodoListPage), findsNWidgets(1));
+    expect(find.text('Todo List'), findsNWidgets(2));
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  testWidgets('Todo List Page Test', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: TodoListPage(),
+      ),
+    );
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Todo List'), findsNWidgets(2));
+    expect(find.byType(GestureDetector), findsOneWidget);
+    expect(find.text('Create Task'), findsOneWidget);
+  });
+
+  testWidgets('Add Task page test', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: AddTaskPage(),
+      ),
+    );
+
+    expect(find.byType(TextField), findsNWidgets(3));
+    expect(find.text('Add Task'), findsOneWidget);
+    expect(find.text('Title'), findsOneWidget);
+    expect(find.text('Description'), findsOneWidget);
   });
 }
+
+

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../controller/todo_controller.dart';
-import '../models/todo_model.dart';
+import '../../../../core/controller/todo_controller.dart';
+import '../../../../core/models/todo_model.dart';
 
 class TaskDetailPage extends StatefulWidget {
   const TaskDetailPage({super.key});
