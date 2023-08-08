@@ -8,8 +8,7 @@
  
 ![Update Task Page](image-1.png)
 
-
-## Onboarding Page Test:
+Onboarding Page Test:
 
  testWidgets("Tapping the Get Started button will navigate to TodoListPage",
       (WidgetTester tester) async {
@@ -27,7 +26,8 @@
   });
 
 
-## Task List Page Test:
+Task List Page Test:
+
  testWidgets('Todo List Page Test', (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
@@ -40,7 +40,8 @@
     expect(find.text('Create Task'), findsOneWidget);
   });
 
-## Create Task Page Test:
+Create Task Page Test:
+
  testWidgets('Add Task page test', (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
