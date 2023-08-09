@@ -42,9 +42,9 @@ class UpdateTask implements UseCase {
   }
 }
 
-class DeleteTodoUseCaseImpl implements UseCase {
+class DeleteTask implements UseCase {
   final TodoRepository repository;
-  DeleteTodoUseCaseImpl({required this.repository});
+  DeleteTask({required this.repository});
 
   Future<Either<Failure, void>> call(String taskId) async {
     return await repository.deleteTask(taskId);
