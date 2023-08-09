@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/controller/todo_controller.dart';
-import '../../../../core/models/todo_model.dart';
-
 class TaskDetailPage extends StatefulWidget {
   const TaskDetailPage({super.key});
 
@@ -17,13 +14,6 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
   final TextEditingController _dueDateController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final todoId = ModalRoute.of(context)?.settings.arguments as int;
-    if (todoId != null) {
-      final todo = TodoController.todos[todoId];
-      _titleController.text = todo.title;
-      _descriptionController.text = todo.description;
-    }
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -211,16 +201,8 @@ class _TaskDetailPageState extends State<TaskDetailPage> {
           ),
           GestureDetector(
             onTap: () {
-              TodoModel todo = TodoModel(
-                title: _titleController.text,
-                description: _descriptionController.text,
-              );
-              _descriptionController.clear();
-              _titleController.clear();
-
               Navigator.pop(
                 context,
-                todo,
               );
             },
             child: Container(

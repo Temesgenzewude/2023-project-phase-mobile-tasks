@@ -1,9 +1,8 @@
-import 'package:building_layouts/features/add_todo/presentation/pages/add_task.dart';
-import 'package:building_layouts/core/controller/todo_controller.dart';
+import 'package:building_layouts/features/todo/presentation/pages/add_todo/add_task.dart';
 
-import 'package:building_layouts/features/onboarding/presentation/pages/onboarding.dart';
-import 'package:building_layouts/features/update_todo/presentation/pages/task_detail.dart';
-import 'package:building_layouts/features/display_todos/presentation/pages/todo_list.dart';
+import 'package:building_layouts/features/todo/presentation/pages/onboarding/onboarding.dart';
+import 'package:building_layouts/features/todo/presentation/pages/update_todo/task_detail.dart';
+import 'package:building_layouts/features/todo/presentation/pages/todo_list/todo_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -58,8 +57,6 @@ void main() {
     expect(find.text('Create Task'), findsOneWidget);
   });
 
-
-  
   // Test cases to verify elements on the UpdateTodoPage
   testWidgets('Update Todo Page Test', (WidgetTester tester) async {
     await tester.pumpWidget(
@@ -79,9 +76,6 @@ void main() {
     expect(find.byType(TaskDetailPage), findsOneWidget);
     // Verifies that there are exactly three TextField widgets on the UpdateTodoPage.
     expect(find.byType(TextField), findsNWidgets(3));
-
-    // verify that the TaskDetailPage contains the title of the todo passed from the todo list page
-    expect(find.text(TodoController.todos[0].title), findsOneWidget);
 
     // Verifies that the text "Update Task" appears once on the UpdateTodoPage.
     expect(find.text('Update Task'), findsOneWidget);
@@ -112,6 +106,4 @@ void main() {
     // Verify that "Description" appear once on the AddTaskPage
     expect(find.text('Description'), findsOneWidget);
   });
-
-  
 }

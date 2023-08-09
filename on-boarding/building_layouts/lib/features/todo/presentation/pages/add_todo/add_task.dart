@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/controller/todo_controller.dart';
-import '../../../../core/models/todo_model.dart';
 
 class AddTaskPage extends StatefulWidget {
   const AddTaskPage({super.key});
@@ -233,14 +231,14 @@ class _AddTaskPageState extends State<AddTaskPage> {
             ),
             GestureDetector(
               onTap: () {
-                TodoModel todo = TodoModel(
-                  title: _titleController.text,
-                  description: _descriptionController.text,
-                );
-                _descriptionController.clear();
-                _titleController.clear();
+                // TodoModel todo = TodoModel(
+                //   title: _titleController.text,
+                //   description: _descriptionController.text,
+                // );
+                // _descriptionController.clear();
+                // _titleController.clear();
 
-                Navigator.pop(context, todo);
+                // Navigator.pop(context, todo);
               },
               child: Container(
                 height: 50.h,

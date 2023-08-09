@@ -1,11 +1,11 @@
 
-import 'package:building_layouts/features/display_todos/presentation/pages/todo_list.dart';
+import 'package:building_layouts/features/todo/presentation/pages/todo_list/todo_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'features/add_todo/presentation/pages/add_task.dart';
-import 'features/onboarding/presentation/pages/onboarding.dart';
-import 'features/update_todo/presentation/pages/task_detail.dart';
+import 'features/todo/presentation/pages/add_todo/add_task.dart';
+import 'features/todo/presentation/pages/onboarding/onboarding.dart';
+import 'features/todo/presentation/pages/update_todo/task_detail.dart';
 
 void main() {
   runApp(const MyApp());

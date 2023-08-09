@@ -1,5 +1,5 @@
 
-import 'package:building_layouts/features/display_todos/presentation/pages/todo_list.dart';
+import 'package:building_layouts/features/todo/presentation/pages/todo_list/todo_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
