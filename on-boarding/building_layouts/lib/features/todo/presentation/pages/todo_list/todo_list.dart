@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'listview_item.dart';
+import '../../widgets/todo_list/listview_items/list_view_items.dart';
 
-class TodoListPage extends StatelessWidget {
+class TodoListPage extends StatefulWidget {
   const TodoListPage({super.key});
 
+  @override
+  State<TodoListPage> createState() => _TodoListPageState();
+}
+
+class _TodoListPageState extends State<TodoListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,11 +24,6 @@ class TodoListPage extends StatelessWidget {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(
-                    Icons.arrow_back_ios,
-                    color: const Color(0xFFEE6F57),
-                    size: 30.h,
-                  ),
                   Text("Todo List",
                       style: TextStyle(
                           color: Colors.black,
@@ -57,60 +57,60 @@ class TodoListPage extends StatelessWidget {
         ),
         SizedBox(height: 20.h),
         Expanded(
-          // remove default padding of ListView
-          // how to remove default padding of ListView in Flutter?
-
           child: MediaQuery.removePadding(
             context: context,
             removeTop: true,
             child: ListView(
               scrollDirection: Axis.vertical,
-              children: [
-                ListViewItem(
-                  leading: 'U',
-                  subtitle: 'Design',
-                  title: 'UI/UX App',
-                  trailingColor: const Color(0xFFEE6F57),
+              children: const [
+                TaskItem(
+                  title: "Task 1",
+                  subtitle: "Description 1",
+                  leading: "U",
+                  trailingColor: Colors.black12,
                 ),
-                ListViewItem(
-                  leading: 'U',
-                  subtitle: 'Design',
-                  title: 'UI/UX App',
-                  trailingColor: Colors.green,
+                TaskItem(
+                  title: "Task 1",
+                  subtitle: "Description 1",
+                  leading: "U",
+                  trailingColor: Colors.black12,
                 ),
-                ListViewItem(
-                  leading: 'V',
-                  subtitle: "",
-                  title: 'View Candidates',
-                  trailingColor: Color.fromARGB(255, 230, 245, 19),
+                TaskItem(
+                  title: "Task 1",
+                  subtitle: "Description 1",
+                  leading: "U",
+                  trailingColor: Colors.black12,
                 ),
-                ListViewItem(
-                  leading: 'F',
-                  subtitle: 'Drybling',
-                  title: 'Football Cup',
-                  trailingColor: Color(0xFFEE6F57),
+                TaskItem(
+                  title: "Task 1",
+                  subtitle: "Description 1",
+                  leading: "U",
+                  trailingColor: Colors.black12,
                 ),
               ],
             ),
           ),
         ),
         SizedBox(height: 30.h),
-        Container(
-          height: 50.h,
-          width: 256.w,
-          margin: EdgeInsets.only(bottom: 30.h),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5.r),
-              color: const Color(0xFFEE6F57)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Create Task',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 19.sp,
-                      fontFamily: "InterBold")),
-            ],
+        GestureDetector(
+          onTap: () {},
+          child: Container(
+            height: 50.h,
+            width: 256.w,
+            margin: EdgeInsets.only(bottom: 30.h),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5.r),
+                color: const Color(0xFFEE6F57)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Create Task',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 19.sp,
+                        fontFamily: "InterBold")),
+              ],
+            ),
           ),
         ),
       ]),

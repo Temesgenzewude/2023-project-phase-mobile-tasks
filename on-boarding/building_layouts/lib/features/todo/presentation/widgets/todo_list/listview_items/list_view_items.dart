@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ListViewItem extends StatelessWidget {
-  ListViewItem({
+class TaskItem extends StatelessWidget {
+  const TaskItem({
     super.key,
     required this.leading,
     required this.title,
     required this.subtitle,
     required this.trailingColor,
   });
-  String leading;
-  String title;
-  String subtitle;
-  Color trailingColor;
+  final String leading;
+  final String title;
+  final String subtitle;
+  final Color trailingColor;
 
   @override
   Widget build(BuildContext context) {

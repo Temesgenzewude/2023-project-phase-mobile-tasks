@@ -1,30 +1,109 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+import 'package:building_layouts/features/todo/presentation/pages/add_todo/add_task.dart';
 
+import 'package:building_layouts/features/todo/presentation/pages/onboarding/onboarding.dart';
+import 'package:building_layouts/features/todo/presentation/pages/update_todo/task_detail.dart';
+import 'package:building_layouts/features/todo/presentation/pages/todo_list/todo_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:building_layouts/main.dart';
-
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  // Test case to verify that tapping the "Get Started" button on the OnboardingPage
+  // navigates to the TodoListPage and checks for specific elements on the page.
+  testWidgets("Tapping the Get Started button will navigate to TodoListPage",
+      (tester) async {
+    await tester.pumpWidget(
+      ScreenUtilInit(
+          designSize: const Size(390, 844),
+          builder: (_, __) {
+            return const MaterialApp(
+              home: OnboardingPage(),
+            );
+          }),
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.byType(ElevatedButton), findsOneWidget);
+    final findsButton = find.byType(ElevatedButton);
+    await tester.tap(findsButton);
+    await tester.pumpAndSettle();
+    // Verifies that the TodoListPage is present exactly once on the screen.
+    expect(find.byType(TodoListPage), findsOneWidget);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  // Test case to verify the elements on the TodoListPage.
+  testWidgets('Todo List Page Test', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      ScreenUtilInit(
+          designSize: const Size(390, 844),
+          builder: (_, __) {
+            return const MaterialApp(
+              home: TodoListPage(),
+            );
+          }),
+    );
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verifies that the text "Todo List" appears twice on the TodoListPage.
+    expect(find.text('Todo List'), findsNWidgets(2));
+
+    // // Verifies that there is exactly one GestureDetector widget on the TodoListPage.
+    // expect(find.byType(GestureDetector), findsNWidgets(4));
+
+    expect(
+        find.byKey(const ValueKey("todoListPageTodoTitle0")), findsOneWidget);
+    expect(find.byKey(const ValueKey("todoListPageTodoDeadline0")),
+        findsOneWidget);
+
+    // Verifies that the text "Create Task" appears once on the TodoListPage.
+    expect(find.text('Create Task'), findsOneWidget);
+  });
+
+  // Test cases to verify elements on the UpdateTodoPage
+  testWidgets('Update Todo Page Test', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      ScreenUtilInit(
+        designSize: const Size(390, 840),
+        builder: (_, __) {
+          return const MaterialApp(
+            home: TodoListPage(),
+          );
+        },
+      ),
+    );
+    // Verify that tapping one of the todo from the todo list page will redirect to task detail page
+    await tester.tap(find.byKey(const ValueKey("todoListPageTodoTitle0")));
+    await tester.pumpAndSettle();
+    // Verify that there is exactly one TaskDetailPage widget
+    expect(find.byType(TaskDetailPage), findsOneWidget);
+    // Verifies that there are exactly three TextField widgets on the UpdateTodoPage.
+    expect(find.byType(TextField), findsNWidgets(3));
+
+    // Verifies that the text "Update Task" appears once on the UpdateTodoPage.
+    expect(find.text('Update Task'), findsOneWidget);
+
+    // Verify that "Description" appear once on the UpdateTodoPage
+    expect(find.text('Description'), findsOneWidget);
+  });
+
+  // Test case to verify the elements on the AddTaskPage.
+  testWidgets('Add Task page test', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      ScreenUtilInit(
+        designSize: const Size(390, 840),
+        builder: (_, __) {
+          return const MaterialApp(
+            home: AddTaskPage(),
+          );
+        },
+      ),
+    );
+
+    // Verifies that there are exactly three TextField widgets on the AddTaskPage.
+    expect(find.byType(TextField), findsNWidgets(3));
+
+    // Verifies that the text "Add Task" appears once on the AddTaskPage.
+    expect(find.text('Add Task'), findsOneWidget);
+
+    // Verify that "Description" appear once on the AddTaskPage
+    expect(find.text('Description'), findsOneWidget);
   });
 }

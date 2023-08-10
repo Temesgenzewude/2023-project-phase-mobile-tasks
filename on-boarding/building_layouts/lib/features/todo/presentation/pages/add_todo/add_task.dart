@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AddTaskPage extends StatelessWidget {
+
+class AddTaskPage extends StatefulWidget {
   const AddTaskPage({super.key});
 
+  @override
+  State<AddTaskPage> createState() => _AddTaskPageState();
+}
+
+class _AddTaskPageState extends State<AddTaskPage> {
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _dueDateController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,10 +25,15 @@ class AddTaskPage extends StatelessWidget {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(
-                    Icons.arrow_back_ios,
-                    color: const Color(0xFFEE6F57),
-                    size: 30.h,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      color: const Color(0xFFEE6F57),
+                      size: 30.h,
+                    ),
                   ),
                   Icon(Icons.more_vert, color: Colors.black, size: 30.h)
                 ]),
@@ -75,6 +89,7 @@ class AddTaskPage extends StatelessWidget {
                   ],
                   color: const Color(0xFFFFFFFF)),
               child: TextField(
+                controller: _titleController,
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 14.sp,
@@ -133,6 +148,7 @@ class AddTaskPage extends StatelessWidget {
                   SizedBox(
                     width: 300.w,
                     child: TextField(
+                      controller: _dueDateController,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 14.sp,
@@ -178,7 +194,6 @@ class AddTaskPage extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 15.w, right: 15.w),
               padding: EdgeInsets.only(left: 10.w, right: 10.w),
-             
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.r),
                   boxShadow: [
@@ -191,6 +206,7 @@ class AddTaskPage extends StatelessWidget {
                   ],
                   color: const Color(0xFFFFFFFF)),
               child: TextField(
+                controller: _descriptionController,
                 minLines: 1,
                 maxLines: 5,
                 style: TextStyle(
@@ -213,22 +229,34 @@ class AddTaskPage extends StatelessWidget {
                 ),
               ),
             ),
-            Container(
-              height: 50.h,
-              width: 180.w,
-              margin: EdgeInsets.only(bottom: 30.h, top: 40.h),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.r),
-                  color: const Color(0xFFEE6F57)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Add Task',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 19.sp,
-                          fontFamily: "InterBold")),
-                ],
+            GestureDetector(
+              onTap: () {
+                // TodoModel todo = TodoModel(
+                //   title: _titleController.text,
+                //   description: _descriptionController.text,
+                // );
+                // _descriptionController.clear();
+                // _titleController.clear();
+
+                // Navigator.pop(context, todo);
+              },
+              child: Container(
+                height: 50.h,
+                width: 180.w,
+                margin: EdgeInsets.only(bottom: 30.h, top: 40.h),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.r),
+                    color: const Color(0xFFEE6F57)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Add Task',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 19.sp,
+                            fontFamily: "InterBold")),
+                  ],
+                ),
               ),
             ),
           ]),
