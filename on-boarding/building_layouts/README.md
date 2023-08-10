@@ -233,3 +233,79 @@ void main() {
  });
 }
 ```
+
+
+
+# August 10, 2023
+
+Contract and Repository:
+
+```dart
+
+abstract class TodoRepository {
+  Future<Either<Failure, TaskEntity>> createTask(TaskEntity task);
+  Future<Either<Failure, TaskEntity>> viewTask(String taskId);
+  Future<Either<Failure, List<TaskEntity>>> viewAllTasks();
+  Future<Either<Failure, void>> deleteTask(String taskId);
+  Future<Either<Failure, TaskEntity>> updateTask(TaskEntity task);
+}
+```
+##
+This code defines an abstract class called TodoRepository, which serves as a contract for interacting with a repository that manages tasks. The class outlines several methods that can be implemented by concrete repository classes to perform various operations on tasks.
+
+
+The methods in the TodoRepository class are as follows:
+
+createTask(TaskEntity task):
+
+  Description: Creates a new task.
+
+  Parameters:
+        task: An instance of the TaskEntity class representing the task to be created.
+
+  Returns: 
+        A Future that resolves to an Either object, which can contain either a Failure object if an error occurs during the operation, or a TaskEntity object representing the created task.
+
+
+
+viewTask(String taskId):
+
+  Description: Retrieves a specific task by its ID.
+
+  Parameters:
+        taskId: A String representing the ID of the task to be retrieved.
+
+  Returns: 
+        A Future that resolves to an Either object, which can contain either a Failure object if an error occurs during the operation, or a TaskEntity object representing the retrieved task.
+
+
+
+viewAllTasks():
+
+  Description: Retrieves all tasks.
+
+  Returns:
+       A Future that resolves to an Either object, which can contain either a Failure object if an error occurs during the operation, or a List<TaskEntity> object representing all the tasks.
+
+
+
+deleteTask(String taskId):
+
+  Description: Deletes a specific task by its Id.
+
+  Parameters:
+      taskId: A String representing the ID of the task to be deleted.
+
+  Returns: 
+        A Future that resolves to an Either object, which can contain either a Failure object if an error occurs during the operation, or void indicating the successful deletion of the task.
+
+
+
+updateTask(TaskEntity task):
+
+Description: Updates an existing task.
+
+Parameters:
+      task: An instance of the TaskEntity class representing the task to be updated.
+Returns: 
+      A Future that resolves to an Either object, which can contain either a Failure object if an error occurs during the operation, or a TaskEntity object representing the updated task.
