@@ -1,10 +1,10 @@
-![Onboarding Page](image-4.png)
+![Onboarding Page](assets/images/documentation_images/image-4.png)
 
-![Task List Page](image-2.png)
+![Task List Page](assets/images/documentation_images/image-2.png)
 
-![Create Task Page](image.png)
+![Create Task Page](assets/images/documentation_images/image.png)
 
-![Update Task Page](image-1.png)
+![Update Task Page](assets/images/documentation_images/image-1.png)
 
 # Onboarding Page Test:
 
@@ -130,4 +130,106 @@
     expect(find.text('Description'), findsOneWidget);
   });
 
+```
+
+# August 9, 2023
+
+Project Setup:
+
+![Project Setup](assets/images/documentation_images/image-3.png)
+
+TodoEntity Implementation:
+
+```dart
+class TodoEntity extends Equatable {
+  final String id;
+  final String title;
+  final String description;
+  final bool isCompleted;
+
+  const TodoEntity(
+      {required this.id,
+      required this.title,
+      required this.description,
+      required this.isCompleted});
+
+  @override
+  List<Object?> get props => [id, title, description, isCompleted];
+}
+
+```
+
+Implement Models:
+
+```dart
+class TodoModel extends TodoEntity {
+ const TodoModel(
+     {required id, required title, required description, required isCompleted})
+     : super(
+           id: id,
+           title: title,
+           description: description,
+           isCompleted: isCompleted);
+
+ factory TodoModel.fromJson(Map<String, dynamic> json) {
+   return TodoModel(
+       id: json['id'],
+       title: json['title'],
+       description: json['description'],
+       isCompleted: json['isCompleted']);
+ }
+
+ Map<String, dynamic> toJson() {
+   return {
+     "id": id,
+     "title": title,
+     "description": description,
+     "isCompleted": isCompleted
+   };
+ }
+}
+
+// TodoMode Test:
+void main() {
+ TodoModel tTodoModel = const TodoModel(
+     id: "1",
+     title: "Task 8",
+     description: "complete day 8 task",
+     isCompleted: false);
+
+ test("should be a subclass of TodoEntity", () async {
+   //assert
+   expect(tTodoModel, isA<TodoEntity>());
+ });
+
+ // test fromJson
+ test("should return valid TodoModel from json", () async {
+   // arrange
+   final Map<String, dynamic> jsonMap = await jsonDecode(
+       readJson("features/todo/helpers/dummy_data/todo_dummy_response.json"));
+
+   // act
+   final result = TodoModel.fromJson(jsonMap);
+
+   // assert
+   expect(result, equals(tTodoModel));
+ });
+
+ // test toJson
+ test("should return valid json from TodoModel", () async {
+
+   final result = tTodoModel.toJson();
+
+
+   final expectedJsonMap = {
+     "id": "1",
+     "title": "Task 8",
+     "description": "complete day 8 task",
+     "isCompleted": false
+   };
+
+   //assert
+   expect(result, equals(expectedJsonMap));
+ });
+}
 ```
