@@ -494,6 +494,48 @@ Returns:
               
               If there is no internet connection, a Left value with a ConnectionFailure is returned.
 
+    
+
+    NetworkInfo implementation:
+
+    ```dart
+
+            abstract class NetworkInfo {
+          Future<bool> get isConnected;
+        }
+
+        class NetworkInfoImpl implements NetworkInfo {
+          final Connectivity connectivity;
+
+          NetworkInfoImpl({required this.connectivity});
+
+          @override
+          Future<bool> get isConnected async {
+            final result = await connectivity.checkConnectivity();
+            return result != ConnectivityResult.none;
+          }
+        }
+
+    ```
+
+        The NetworkInfo interface has a single method isConnected, which returns a Future<bool> indicating whether there is an internet connection or not.
+
+        The NetworkInfoImpl class, which is the implementation of NetworkInfo interface, has the following properties:
+
+            connectivity: 
+                    An instance of the Connectivity class, which is a Flutter plugin for discovering network connectivity.
+
+            The constructor of NetworkInfoImpl takes the required dependency (connectivity) and initializes the corresponding property.
+
+            The class implements the isConnected method from the NetworkInfo interface:
+
+                isConnected: 
+                        Checks if there is an internet connection by calling the checkConnectivity method on the connectivity plugin. 
+                        
+                        If the result is not ConnectivityResult.none, it returns true, otherwise it returns false.
+
+
+
 
 
 
