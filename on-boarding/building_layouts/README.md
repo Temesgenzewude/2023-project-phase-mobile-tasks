@@ -317,7 +317,7 @@ Returns:
 
     Repository Implementation:
 
-    ```dart
+```dart
     class TodoRepositoryImpl implements TodoRepository {
       final TodoLocalDataSource localDataSource;
       final TodoRemoteDataSource remoteDataSource;
@@ -414,7 +414,7 @@ Returns:
         }
       }
 
-    ```
+```
 
     The TodoRepositoryImpl class, which is the implementation of TodoRepository abstract class, has the following properties:
 
@@ -498,7 +498,7 @@ Returns:
 
     NetworkInfo implementation:
 
-    ```dart
+```dart
 
             abstract class NetworkInfo {
           Future<bool> get isConnected;
@@ -515,8 +515,7 @@ Returns:
             return result != ConnectivityResult.none;
           }
         }
-
-    ```
+```
 
         The NetworkInfo interface has a single method isConnected, 
         
