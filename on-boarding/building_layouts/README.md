@@ -518,21 +518,37 @@ Returns:
 
     ```
 
-        The NetworkInfo interface has a single method isConnected, which returns a Future<bool> indicating whether there is an internet connection or not.
+        The NetworkInfo interface has a single method isConnected, 
+        
+        which returns a Future<bool>
+        
+         indicating whether there is an internet connection or not.
 
-        The NetworkInfoImpl class, which is the implementation of NetworkInfo interface, has the following properties:
+        The NetworkInfoImpl class, which is the implementation of 
+        
+        NetworkInfo interface, has the following properties:
+
 
             connectivity: 
-                    An instance of the Connectivity class, which is a Flutter plugin for discovering network connectivity.
+                    An instance of the Connectivity class, 
 
-            The constructor of NetworkInfoImpl takes the required dependency (connectivity) and initializes the corresponding property.
+                    which is a Flutter plugin for discovering network connectivity.
+
+                    The constructor of NetworkInfoImpl takes the required dependency (connectivity) 
+                    
+                    and initializes the corresponding property.
+
 
             The class implements the isConnected method from the NetworkInfo interface:
 
                 isConnected: 
-                        Checks if there is an internet connection by calling the checkConnectivity method on the connectivity plugin. 
+                        Checks if there is an internet connection by calling the 
                         
-                        If the result is not ConnectivityResult.none, it returns true, otherwise it returns false.
+                        checkConnectivity method on the connectivity plugin. 
+                        
+                        If the result is not ConnectivityResult.none, 
+                        
+                        it returns true, otherwise it returns false.
 
 
 
