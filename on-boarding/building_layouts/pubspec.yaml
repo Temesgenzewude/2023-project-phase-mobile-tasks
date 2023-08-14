@@ -37,6 +37,7 @@ dependencies:
   flutter_screenutil: ^5.7.0
   equatable: ^2.0.5
   dartz: ^0.10.1
+  connectivity_plus: ^4.0.2
 
 dev_dependencies:
   flutter_test:

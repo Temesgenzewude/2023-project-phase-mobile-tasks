@@ -309,3 +309,145 @@ Parameters:
       task: An instance of the TaskEntity class representing the task to be updated.
 Returns: 
       A Future that resolves to an Either object, which can contain either a Failure object if an error occurs during the operation, or a TaskEntity object representing the updated task.
+
+
+
+
+# Day 9 Task
+
+Repository Implementation:
+
+```dart
+class TodoRepositoryImpl implements TodoRepository {
+  final TodoLocalDataSource localDataSource;
+  final TodoRemoteDataSource remoteDataSource;
+  final NetworkInfoImpl networkInfo;
+  TodoRepositoryImpl({
+    required this.localDataSource,
+    required this.remoteDataSource,
+    required this.networkInfo,
+  });
+
+  @override
+  Future<Either<Failure, TodoEntity>> createTask(TodoEntity todoEntity) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteTask = await remoteDataSource.createTask(todoEntity);
+        localDataSource.cacheTask(remoteTask.id, remoteTask);
+        return Right(remoteTask);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: "Server Error"));
+      }
+    } else {
+      return Left(ConnectionFailure(message: "No Internet Connection"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, TodoEntity>> viewTask(String todoId) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteTask = await remoteDataSource.viewTask(todoId);
+        localDataSource.cacheTask(remoteTask.id, remoteTask);
+        return Right(remoteTask);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: "Server Error"));
+      }
+    } else {
+      // get from local data source
+      try {
+        final localTask = await localDataSource.getTask(todoId);
+        return Right(localTask);
+      } on CacheException catch (e) {
+        return Left(CacheFailure(message: "Cache Error"));
+      }
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<TodoEntity>>> viewAllTasks() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteTasks = await remoteDataSource.viewAllTasks();
+        localDataSource.cacheTasks("todos", remoteTasks);
+        return Right(remoteTasks);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: "Server Error"));
+      }
+    } else {
+      try {
+        final localTasks = await localDataSource.getTasks("tasks");
+        return Right(localTasks);
+      } on CacheException catch (e) {
+        return Left(CacheFailure(message: "Cache Error"));
+      }
+    }
+  }
+
+  @override
+  Future<Either<Failure, TodoEntity>> updateTask(TodoEntity todoEntity) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteTask = await remoteDataSource.updateTask(todoEntity);
+        localDataSource.cacheTask(remoteTask.id, remoteTask);
+        return Right(remoteTask);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: "Server Error"));
+      }
+    } else {
+      return Left(ConnectionFailure(message: "No Internet Connection"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteTask(String todoId) async {
+    if (await networkInfo.isConnected) {
+      try {
+        remoteDataSource.deleteTask(todoId);
+        localDataSource.removeTask(todoId);
+        return const Right(null);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: "Server Error"));
+      }
+    } else {
+      return Left(ConnectionFailure(message: "No Internet Connection"));
+    }
+  }
+
+```
+
+The TodoRepositoryImpl class, which is the implementation of TodoRepository abstract class, has the following properties:
+
+    localDataSource: 
+            An instance of the TodoLocalDataSource interface, representing the local data source for tasks.
+    remoteDataSource: 
+            An instance of the TodoRemoteDataSource interface, representing the remote data source for tasks.
+    networkInfo: 
+            An instance of the NetworkInfoImpl class, providing information about the network connectivity.
+
+    The constructor of TodoRepositoryImpl takes the required dependencies (localDataSource, remoteDataSource, and networkInfo) and initializes the corresponding properties.
+    
+
+The class implements several methods from the TodoRepository interface:
+
+    createTask: 
+
+          Creates a new todo by first checking if there is an internet connection using networkInfo.isConnected. If there is a connection, it calls the createTask method on the remoteDataSource to create the todo remotely. The created task is then cached locally using localDataSource.cacheTask. If any errors occur during the process, a ServerException is caught and a Left value with a ServerFailure is returned. If there is no internet connection, a Left value with a ConnectionFailure is returned.
+
+    viewTask:
+
+          Retrieves a todo by its ID (todoId) by first checking the internet connection using networkInfo.isConnected. If there is a connection, it calls the viewTask method on the remoteDataSource to retrieve the todo remotely. The retrieved todo is then cached locally using localDataSource.cacheTask. If any errors occur during the process, a ServerException is caught and a Left value with a ServerFailure is returned. If there is no internet connection, it tries to retrieve the todo from the local data source using localDataSource.getTask. If any errors occur during this process, a CacheException is caught and a Left value with a CacheFailure is returned.
+
+    viewAllTasks: 
+
+          Retrieves all todos by first checking the internet connection using networkInfo.isConnected. If there is a connection, it calls the viewAllTasks method on the remoteDataSource to retrieve all todos remotely. The retrieved todos are then cached locally using localDataSource.cacheTasks. If any errors occur during the process, a ServerException is caught and a Left value with a ServerFailure is returned. If there is no internet connection, it tries to retrieve the todos from the local data source using localDataSource.getTasks. If any errors occur during this process, a CacheException is caught and a Left value with a CacheFailure is returned.
+
+    updateTask:
+    
+          Updates an existing todo by first checking if there is an internet connection using networkInfo.isConnected. If there is a connection, it calls the updateTask method on the remoteDataSource to update the todo remotely. The updated todo is then cached locally using localDataSource.cacheTask. If any errors occur during the process, a ServerException is caught and a Left value with a ServerFailure is returned. If there is no internet connection, a Left value with a ConnectionFailure is returned.
+
+    deleteTask: 
+
+          Deletes a todo by its ID (todoId) by first checking if there is an internet connection using networkInfo.isConnected. If there is a connection, it calls the deleteTask method on the remoteDataSource to delete the todo remotely. The todo is also removed from the local data source using localDataSource.removeTask. If any errors occur during the process, a ServerException is caught and a Left value with a ServerFailure is returned. If there is no internet connection, a Left value with a ConnectionFailure is returned.
+
+
