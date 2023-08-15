@@ -234,8 +234,6 @@ void main() {
 }
 ```
 
-
-
 # August 10, 2023
 
 Contract and Repository:
@@ -250,68 +248,58 @@ abstract class TodoRepository {
   Future<Either<Failure, TaskEntity>> updateTask(TaskEntity task);
 }
 ```
-##
-This code defines an abstract class called TodoRepository, which serves as a contract for interacting with a repository that manages tasks. The class outlines several methods that can be implemented by concrete repository classes to perform various operations on tasks.
 
+##
+
+This code defines an abstract class called TodoRepository, which serves as a contract for interacting with a repository that manages tasks. The class outlines several methods that can be implemented by concrete repository classes to perform various operations on tasks.
 
 The methods in the TodoRepository class are as follows:
 
 createTask(TaskEntity task):
 
-  Description: Creates a new task.
+Description: Creates a new task.
 
-  Parameters:
-        task: An instance of the TaskEntity class representing the task to be created.
+Parameters:
+task: An instance of the TaskEntity class representing the task to be created.
 
-  Returns: 
-        A Future that resolves to an Either object, which can contain either a Failure object if an error occurs during the operation, or a TaskEntity object representing the created task.
-
-
+Returns:
+A Future that resolves to an Either object, which can contain either a Failure object if an error occurs during the operation, or a TaskEntity object representing the created task.
 
 viewTask(String taskId):
 
-  Description: Retrieves a specific task by its ID.
+Description: Retrieves a specific task by its ID.
 
-  Parameters:
-        taskId: A String representing the ID of the task to be retrieved.
+Parameters:
+taskId: A String representing the ID of the task to be retrieved.
 
-  Returns: 
-        A Future that resolves to an Either object, which can contain either a Failure object if an error occurs during the operation, or a TaskEntity object representing the retrieved task.
-
-
+Returns:
+A Future that resolves to an Either object, which can contain either a Failure object if an error occurs during the operation, or a TaskEntity object representing the retrieved task.
 
 viewAllTasks():
 
-  Description: Retrieves all tasks.
+Description: Retrieves all tasks.
 
-  Returns:
-       A Future that resolves to an Either object, which can contain either a Failure object if an error occurs during the operation, or a List<TaskEntity> object representing all the tasks.
-
-
+Returns:
+A Future that resolves to an Either object, which can contain either a Failure object if an error occurs during the operation, or a List<TaskEntity> object representing all the tasks.
 
 deleteTask(String taskId):
 
-  Description: Deletes a specific task by its Id.
+Description: Deletes a specific task by its Id.
 
-  Parameters:
-      taskId: A String representing the ID of the task to be deleted.
+Parameters:
+taskId: A String representing the ID of the task to be deleted.
 
-  Returns: 
-        A Future that resolves to an Either object, which can contain either a Failure object if an error occurs during the operation, or void indicating the successful deletion of the task.
-
-
+Returns:
+A Future that resolves to an Either object, which can contain either a Failure object if an error occurs during the operation, or void indicating the successful deletion of the task.
 
 updateTask(TaskEntity task):
 
 Description: Updates an existing task.
 
 Parameters:
-      task: An instance of the TaskEntity class representing the task to be updated.
-Returns: 
-      A Future that resolves to an Either object, which can contain either a Failure object if an error occurs during the operation, or a TaskEntity object representing the updated task.
-
-
-
+task: An instance of the TaskEntity class representing the task to be updated.
+Returns:
+A Future that resolves to an Either object, which can contain either a Failure object if an error occurs during the operation, or a TaskEntity object representing the updated task.
 
 # Day 9 Task
 
@@ -418,11 +406,11 @@ Returns:
 
     The TodoRepositoryImpl class, which is the implementation of TodoRepository abstract class, has the following properties:
 
-        localDataSource: 
+        localDataSource:
                 An instance of the TodoLocalDataSource interface, representing the local data source for tasks.
-        remoteDataSource: 
+        remoteDataSource:
                 An instance of the TodoRemoteDataSource interface, representing the remote data source for tasks.
-        networkInfo: 
+        networkInfo:
                 An instance of the NetworkInfoImpl class, providing information about the network connectivity.
 
         The constructor of TodoRepositoryImpl takes the required dependencies (localDataSource, remoteDataSource, and networkInfo) and initializes the corresponding properties.
@@ -430,71 +418,71 @@ Returns:
 
     The class implements several methods from the TodoRepository interface:
 
-        createTask: 
+        createTask:
 
               Creates a new todo by first checking if there is an internet connection using networkInfo.isConnected.
-              
-               If there is a connection, it calls the createTask method on the remoteDataSource to create the todo remotely. 
-               
-               The created task is then cached locally using localDataSource.cacheTask. 
-               
-               If any errors occur during the process, a ServerException is caught and a Left value with a ServerFailure is returned. 
-               
+
+               If there is a connection, it calls the createTask method on the remoteDataSource to create the todo remotely.
+
+               The created task is then cached locally using localDataSource.cacheTask.
+
+               If any errors occur during the process, a ServerException is caught and a Left value with a ServerFailure is returned.
+
                If there is no internet connection, a Left value with a ConnectionFailure is returned.
 
         viewTask:
 
-              Retrieves a todo by its ID (todoId) by first checking the internet connection using networkInfo.isConnected. 
-              
-              If there is a connection, it calls the viewTask method on the remoteDataSource to retrieve the todo remotely. 
-              
-              The retrieved todo is then cached locally using localDataSource.cacheTask. 
-              
-              If any errors occur during the process, a ServerException is caught and a Left value with a ServerFailure is returned. 
-              
-              If there is no internet connection, it tries to retrieve the todo from the local data source using localDataSource.getTask. 
-              
+              Retrieves a todo by its ID (todoId) by first checking the internet connection using networkInfo.isConnected.
+
+              If there is a connection, it calls the viewTask method on the remoteDataSource to retrieve the todo remotely.
+
+              The retrieved todo is then cached locally using localDataSource.cacheTask.
+
+              If any errors occur during the process, a ServerException is caught and a Left value with a ServerFailure is returned.
+
+              If there is no internet connection, it tries to retrieve the todo from the local data source using localDataSource.getTask.
+
               If any errors occur during this process, a CacheException is caught and a Left value with a CacheFailure is returned.
 
-        viewAllTasks: 
+        viewAllTasks:
 
-              Retrieves all todos by first checking the internet connection using networkInfo.isConnected. 
-              
-              If there is a connection, it calls the viewAllTasks method on the remoteDataSource to retrieve all todos remotely. 
-              
-              The retrieved todos are then cached locally using localDataSource.cacheTasks. 
-              
-              If any errors occur during the process, a ServerException is caught and a Left value with a ServerFailure is returned. 
-              
-              If there is no internet connection, it tries to retrieve the todos from the local data source using localDataSource.getTasks. 
-              
+              Retrieves all todos by first checking the internet connection using networkInfo.isConnected.
+
+              If there is a connection, it calls the viewAllTasks method on the remoteDataSource to retrieve all todos remotely.
+
+              The retrieved todos are then cached locally using localDataSource.cacheTasks.
+
+              If any errors occur during the process, a ServerException is caught and a Left value with a ServerFailure is returned.
+
+              If there is no internet connection, it tries to retrieve the todos from the local data source using localDataSource.getTasks.
+
               If any errors occur during this process, a CacheException is caught and a Left value with a CacheFailure is returned.
 
         updateTask:
-        
-              Updates an existing todo by first checking if there is an internet connection using networkInf.isConnected. 
-              
-              If there is a connection, it calls the updateTask method on the remoteDataSource to update the todo remotely. 
-              
-              The updated todo is then cached locally using localDataSource.cacheTask. 
-              
-              If any errors occur during the process, a ServerException is caught and a Left value with a ServerFailure is returned. 
-              
+
+              Updates an existing todo by first checking if there is an internet connection using networkInf.isConnected.
+
+              If there is a connection, it calls the updateTask method on the remoteDataSource to update the todo remotely.
+
+              The updated todo is then cached locally using localDataSource.cacheTask.
+
+              If any errors occur during the process, a ServerException is caught and a Left value with a ServerFailure is returned.
+
               If there is no internet connection, a Left value with a ConnectionFailure is returned.
 
-        deleteTask: 
+        deleteTask:
 
-              Deletes a todo by its ID (todoId) by first checking if there is an internet connection using networkInfo.isConnected. 
-              
-              If there is a connection, it calls the deleteTask method on the remoteDataSource to delete the todo remotely. 
-              
-              The todo is also removed from the local data source using localDataSource.removeTask. 
-              
-              If any errors occur during the process, a ServerException is caught and a Left value with a ServerFailure is returned. 
-              
+              Deletes a todo by its ID (todoId) by first checking if there is an internet connection using networkInfo.isConnected.
+
+              If there is a connection, it calls the deleteTask method on the remoteDataSource to delete the todo remotely.
+
+              The todo is also removed from the local data source using localDataSource.removeTask.
+
+              If any errors occur during the process, a ServerException is caught and a Left value with a ServerFailure is returned.
+
               If there is no internet connection, a Left value with a ConnectionFailure is returned.
 
-    
+
 
     NetworkInfo implementation:
 
@@ -517,39 +505,37 @@ Returns:
         }
 ```
 
-        The NetworkInfo interface has a single method isConnected, 
-        
+        The NetworkInfo interface has a single method isConnected,
+
         which returns a Future<bool>
-        
+
          indicating whether there is an internet connection or not.
 
-        The NetworkInfoImpl class, which is the implementation of 
-        
+        The NetworkInfoImpl class, which is the implementation of
+
         NetworkInfo interface, has the following properties:
 
 
-            connectivity: 
-                    An instance of the Connectivity class, 
+            connectivity:
+                    An instance of the Connectivity class,
 
                     which is a Flutter plugin for discovering network connectivity.
 
-                    The constructor of NetworkInfoImpl takes the required dependency (connectivity) 
-                    
+                    The constructor of NetworkInfoImpl takes the required dependency (connectivity)
+
                     and initializes the corresponding property.
 
 
             The class implements the isConnected method from the NetworkInfo interface:
 
-                isConnected: 
-                        Checks if there is an internet connection by calling the 
-                        
-                        checkConnectivity method on the connectivity plugin. 
-                        
-                        If the result is not ConnectivityResult.none, 
-                        
+                isConnected:
+                        Checks if there is an internet connection by calling the
+
+                        checkConnectivity method on the connectivity plugin.
+
+                        If the result is not ConnectivityResult.none,
+
                         it returns true, otherwise it returns false.
-
-
 
 ## Day 10 Task:
 
@@ -584,7 +570,7 @@ class TodoLocalDataSourceImpl implements TodoLocalDataSource {
   @override
   Future<List<TodoModel>> getTasks(String key) {
     final todosJson = sharedPreferences.getStringList(key);
-    // If the list of JSON strings is not null, 
+    // If the list of JSON strings is not null,
     //decode each string into a TodoModel object,
     // and return a list of TodoModel objects.
     // Otherwise, throw a CacheException.
@@ -631,14 +617,109 @@ class TodoLocalDataSourceImpl implements TodoLocalDataSource {
 
 ```
 
-
 TodoRemoteDataSource implementation:
 
 ```dart
+/// A concrete implementation of the [TodoRemoteDataSource] interface that interacts
+/// with a remote server to perform CRUD operations on todo tasks.
+
+class TodoRemoteDataSourceImpl implements TodoRemoteDataSource {
+  final http.Client client;
+  TodoRemoteDataSourceImpl({
+    required this.client,
+  });
+
+  /// Creates a new todo task on the remote server using the provided [todoModel].
+  /// Returns the created [TodoModel] if the request is successful (status code 201),
+  /// otherwise throws a [ServerException].
+  @override
+  Future<TodoModel> createTask(TodoModel todoModel) async {
+    final http.Response response = await client.post(
+      Uri.parse('https://test/todos'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(todoModel.toJson()),
+    );
+    if (response.statusCode == 201) {
+      return TodoModel.fromJson(json.decode(response.body));
+    } else {
+      throw ServerException();
+    }
+  }
+
+  /// Retrieves the details of a specific todo task with the given
+  /// [todoId] from the remote server.
+  /// Returns the corresponding [TodoModel] if the request is successful (status code 200),
+  /// otherwise throws a [ServerException].
+  @override
+  Future<TodoModel> viewTask(String todoId) async {
+    http.Response response = await client.get(
+        Uri.parse('https://test/todos/$todoId'),
+        headers: {'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      return TodoModel.fromJson(json.decode(response.body));
+    } else {
+      throw ServerException();
+    }
+  }
+
+  /// Retrieves all todo tasks from the remote server.
+  /// Returns a list of [TodoModel] if the request is successful (status code 200),
+  /// otherwise throws a [ServerException].
+  @override
+  Future<List<TodoModel>> viewAllTasks() async {
+    final http.Response response = await client.get(
+      Uri.parse('https://test/todos'),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final List<TodoModel> todoList = [];
+      final List<dynamic> todoListJson = json.decode(response.body);
+
+      for (var element in todoListJson) {
+        todoList.add(TodoModel.fromJson(element));
+      }
+      return todoList;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  /// Updates an existing todo task with the provided [todoId] on the remote server
+  /// using the updated details in [todoModel].
+  /// Returns the updated [TodoModel] if the request is successful (status code 200),
+  /// otherwise throws a [ServerException].
+  @override
+  Future<TodoModel> updateTask(String todoId, TodoModel todoModel) async {
+    final http.Response response = await client.put(
+      Uri.parse('https://test/todos/${todoModel.id}'),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode(todoModel.toJson()),
+    );
+
+    if (response.statusCode == 200) {
+      return TodoModel.fromJson(json.decode(response.body));
+    } else {
+      throw ServerException();
+    }
+  }
+
+  /// Deletes a todo task with the given [todoId] from the remote server.
+  /// Returns a [Future] that completes successfully if the request is successful (status code 200),
+  /// otherwise throws a [ServerException].
+  @override
+  Future<void> deleteTask(String todoId) async {
+    final http.Response response = await client.delete(
+      Uri.parse('https://test/todos/$todoId'),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      return Future.value();
+    } else {
+      throw ServerException();
+    }
+  }
+}
 
 ```
- 
-
-
-
-
