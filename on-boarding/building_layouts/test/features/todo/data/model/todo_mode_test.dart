@@ -4,7 +4,7 @@ import 'package:building_layouts/core/entities/todo_entity.dart';
 import 'package:building_layouts/features/todo/data/models/todo_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../helpers/json_reader.dart';
+import '../../helpers/fixtures/json_reader.dart';
 
 void main() {
   TodoModel tTodoModel = const TodoModel(

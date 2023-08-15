@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:building_layouts/features/todo/data/models/todo_model.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/entities/todo_entity.dart';
@@ -20,10 +21,10 @@ class TodoRepositoryImpl implements TodoRepository {
   });
 
   @override
-  Future<Either<Failure, TodoEntity>> createTask(TodoEntity todoEntity) async {
+  Future<Either<Failure, TodoModel>> createTask(TodoModel todoModel) async {
     if (await networkInfo.isConnected) {
       try {
-        final remoteTask = await remoteDataSource.createTask(todoEntity);
+        final remoteTask = await remoteDataSource.createTask(todoModel);
         localDataSource.cacheTask(remoteTask.id, remoteTask);
         return Right(remoteTask);
       } on ServerException catch (e) {
@@ -76,10 +77,10 @@ class TodoRepositoryImpl implements TodoRepository {
   }
 
   @override
-  Future<Either<Failure, TodoEntity>> updateTask(TodoEntity todoEntity) async {
+  Future<Either<Failure, TodoEntity>> updateTask(TodoModel todoModel) async {
     if (await networkInfo.isConnected) {
       try {
-        final remoteTask = await remoteDataSource.updateTask(todoEntity);
+        final remoteTask = await remoteDataSource.updateTask(todoModel.id, todoModel);
         localDataSource.cacheTask(remoteTask.id, remoteTask);
         return Right(remoteTask);
       } on ServerException catch (e) {

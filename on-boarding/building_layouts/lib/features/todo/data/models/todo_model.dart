@@ -2,7 +2,10 @@ import 'package:building_layouts/core/entities/todo_entity.dart';
 
 class TodoModel extends TodoEntity {
   const TodoModel(
-      {required id, required title, required description, required isCompleted})
+      {required String id,
+      required String title,
+      required String description,
+      required bool isCompleted})
       : super(
             id: id,
             title: title,
@@ -26,9 +29,3 @@ class TodoModel extends TodoEntity {
     };
   }
 }
-
-
-
-
-
-
