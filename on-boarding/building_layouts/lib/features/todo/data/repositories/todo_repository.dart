@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:building_layouts/features/todo/data/models/todo_model.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/entities/todo_entity.dart';
@@ -9,6 +7,7 @@ import '../../../../core/network/network_info.dart';
 import '../../domain/repositories/todo_repository.dart';
 import '../data_sources/todo_local_data_source.dart';
 import '../data_sources/todo_remote_data_source.dart';
+import '../models/todo_model.dart';
 
 class TodoRepositoryImpl implements TodoRepository {
   final TodoLocalDataSource localDataSource;
@@ -21,9 +20,15 @@ class TodoRepositoryImpl implements TodoRepository {
   });
 
   @override
-  Future<Either<Failure, TodoModel>> createTask(TodoModel todoModel) async {
+  Future<Either<Failure, TodoEntity>> createTask(TodoEntity todoEntity) async {
     if (await networkInfo.isConnected) {
       try {
+        TodoModel todoModel = TodoModel(
+          id: todoEntity.id,
+          title: todoEntity.title,
+          description: todoEntity.description,
+          isCompleted: todoEntity.isCompleted,
+        );
         final remoteTask = await remoteDataSource.createTask(todoModel);
         localDataSource.cacheTask(remoteTask.id, remoteTask);
         return Right(remoteTask);
@@ -77,10 +82,17 @@ class TodoRepositoryImpl implements TodoRepository {
   }
 
   @override
-  Future<Either<Failure, TodoEntity>> updateTask(TodoModel todoModel) async {
+  Future<Either<Failure, TodoEntity>> updateTask(TodoEntity todoEntity) async {
+    TodoModel todoModel = TodoModel(
+      id: todoEntity.id,
+      title: todoEntity.title,
+      description: todoEntity.description,
+      isCompleted: todoEntity.isCompleted,
+    );
     if (await networkInfo.isConnected) {
       try {
-        final remoteTask = await remoteDataSource.updateTask(todoModel.id, todoModel);
+        final remoteTask =
+            await remoteDataSource.updateTask(todoModel.id, todoModel);
         localDataSource.cacheTask(remoteTask.id, remoteTask);
         return Right(remoteTask);
       } on ServerException catch (e) {

@@ -32,8 +32,7 @@ class TodoLocalDataSourceImpl implements TodoLocalDataSource {
   @override
   Future<List<TodoModel>> getTasks(String key) {
     final todosJson = sharedPreferences.getStringList(key);
-    // If the list of JSON strings is not null, 
-    //decode each string into a TodoModel object,
+    // If the list of JSON strings is not null, decode each string into a TodoModel object,
     // and return a list of TodoModel objects.
     // Otherwise, throw a CacheException.
     if (todosJson != null) {
