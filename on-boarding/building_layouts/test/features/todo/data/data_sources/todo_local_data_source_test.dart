@@ -90,7 +90,8 @@ void main() {
       id: "1",
       title: "Test Title",
       description: "Test Description",
-      isCompleted: false,
+       status: "In Progress",
+      dueDate: "10/10/2023",
     );
 
     // test not passing: MissingStubError

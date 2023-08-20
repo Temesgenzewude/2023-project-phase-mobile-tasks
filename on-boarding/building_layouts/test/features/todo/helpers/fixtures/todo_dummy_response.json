@@ -1,6 +1,7 @@
 {
-  "id": "1",
+  "_id": "1",
   "title": "Task 8",
   "description": "complete day 8 task",
-  "isCompleted": false
+  "status": "In Progress",
+  "dueDate": "10/10/2023"
 }

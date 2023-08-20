@@ -5,28 +5,31 @@ class TodoModel extends TodoEntity {
       {required String id,
       required String title,
       required String description,
-      required bool isCompleted})
+      required String status,
+      required String dueDate})
       : super(
             id: id,
             title: title,
             description: description,
-            isCompleted: isCompleted);
+            status: status,
+            dueDate: dueDate);
 
   factory TodoModel.fromJson(Map<String, dynamic> json) {
     return TodoModel(
-        id: json['id'],
-        title: json['title'],
-        description: json['description'],
-        isCompleted: json['isCompleted']);
+      id: json['_id'],
+      title: json['title'],
+      description: json['description'],
+      status: json['status'],
+      dueDate: json['dueDate'],
+    );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "id": id,
       "title": title,
       "description": description,
-      "isCompleted": isCompleted
+      "status": status,
+      "dueDate": dueDate
     };
   }
- 
 }

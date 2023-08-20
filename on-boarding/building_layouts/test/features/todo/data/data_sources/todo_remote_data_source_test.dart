@@ -126,7 +126,8 @@ todos being the endpoint and with application/json header''', () {
         id: "1",
         title: "Task 8",
         description: "complete day 8 task",
-        isCompleted: false);
+        status: "In Progress",
+        dueDate: "10/10/2023");
     final tTodoModelJson = json.decode(
         readJson("features/todo/helpers/fixtures/todo_dummy_response.json"));
 
@@ -186,11 +187,13 @@ todos being the endpoint and with application/json header''', () {
         id: "1",
         title: "Task 8",
         description: "complete day 8 task",
-        isCompleted: false);
+        status: "In Progress",
+        dueDate: "10/10/2023");
     final tTodoModelJson = json.decode(
         readJson("features/todo/helpers/fixtures/todo_dummy_response.json"));
 
-    test(''' should perform a PUT request on a URL with todo to be updated''', (){
+    test(''' should perform a PUT request on a URL with todo to be updated''',
+        () {
       // arrange
       when(mockHttpClient.put(any,
               headers: anyNamed('headers'), body: anyNamed('body')))
@@ -219,7 +222,8 @@ todos being the endpoint and with application/json header''', () {
                     "features/todo/helpers/fixtures/todo_dummy_response.json"),
                 200));
         // act
-        final result = await todoRemoteDataSourceImpl.updateTask(tTodoId, tTodoModel);
+        final result =
+            await todoRemoteDataSourceImpl.updateTask(tTodoId, tTodoModel);
         // assert
         expect(result, equals(tTodoModel));
       },
@@ -236,15 +240,11 @@ todos being the endpoint and with application/json header''', () {
         // act
         final call = todoRemoteDataSourceImpl.updateTask;
         // assert
-        expect(() => call(tTodoId, tTodoModel), throwsA(isA<ServerException>()));
+        expect(
+            () => call(tTodoId, tTodoModel), throwsA(isA<ServerException>()));
       },
     );
   });
 
-  group("deleteTask", () {
-
-    
-
-
-  });
+  group("deleteTask", () {});
 }

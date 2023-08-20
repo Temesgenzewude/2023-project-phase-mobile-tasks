@@ -1,6 +1,7 @@
 {
   "id": "1",
-  "title": "This is a test title",
-  "description": "This is a test description",
-  "isCompleted": false
+  "title": "Task 8",
+  "description": "complete day 8 task",
+  "status": "In Progress",
+  "dueDate": "10/10/2023"
 }

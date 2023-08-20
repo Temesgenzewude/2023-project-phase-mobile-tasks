@@ -52,7 +52,8 @@ void main() {
         id: "1",
         title: "Bloc Test",
         description: "Bloc test description",
-        isCompleted: false);
+        status: "In Progress",
+        dueDate: "10/10/2023");
 
     blocTest('emits [LoadingState, LoadedState] when task created successfully',
         build: () {
@@ -99,7 +100,8 @@ void main() {
         id: "1",
         title: "Bloc Test",
         description: "Bloc test description",
-        isCompleted: false);
+        status: "In Progress",
+        dueDate: "10/10/2023");
     blocTest(
       'emits [LoadingState, LoadedAllTasksState] when view all tasks successfully',
       build: () {
@@ -150,7 +152,8 @@ void main() {
         id: "1",
         title: "Bloc Test",
         description: "Bloc test description",
-        isCompleted: false);
+        status: "In Progress",
+        dueDate: "10/10/2023");
     blocTest(
       'emits [LoadingState, LoadedSingleTaskState] when view task successfully',
       build: () {
@@ -199,7 +202,8 @@ void main() {
         id: "1",
         title: "Bloc Test",
         description: "Bloc test description",
-        isCompleted: false);
+        status: "In Progress",
+        dueDate: "10/10/2023");
 
     blocTest(
       'emits [LoadingState, LoadedSingleTaskState] when update task successfully',

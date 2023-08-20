@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../../../../core/constants/api_end_points.dart';
 import '../../../../core/errors/exception.dart';
 import 'todo_remote_data_source.dart';
 import '../models/todo_model.dart';
@@ -17,7 +18,7 @@ class TodoRemoteDataSourceImpl implements TodoRemoteDataSource {
   @override
   Future<TodoModel> createTask(TodoModel todoModel) async {
     final http.Response response = await client.post(
-      Uri.parse('https://test/todos'),
+      Uri.parse(ApiEndpoints.BASE_URL),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(todoModel.toJson()),
     );
@@ -28,14 +29,14 @@ class TodoRemoteDataSourceImpl implements TodoRemoteDataSource {
     }
   }
 
-  /// Retrieves the details of a specific todo task with the given 
+  /// Retrieves the details of a specific todo task with the given
   /// [todoId] from the remote server.
   /// Returns the corresponding [TodoModel] if the request is successful (status code 200),
   /// otherwise throws a [ServerException].
   @override
   Future<TodoModel> viewTask(String todoId) async {
     http.Response response = await client.get(
-        Uri.parse('https://test/todos/$todoId'),
+        Uri.parse('${ApiEndpoints.BASE_URL}/$todoId'),
         headers: {'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
       return TodoModel.fromJson(json.decode(response.body));
@@ -50,13 +51,13 @@ class TodoRemoteDataSourceImpl implements TodoRemoteDataSource {
   @override
   Future<List<TodoModel>> viewAllTasks() async {
     final http.Response response = await client.get(
-      Uri.parse('https://test/todos'),
+      Uri.parse(ApiEndpoints.BASE_URL),
       headers: {'Content-Type': 'application/json'},
     );
 
     if (response.statusCode == 200) {
       final List<TodoModel> todoList = [];
-      final List<dynamic> todoListJson = json.decode(response.body);
+      final List<dynamic> todoListJson = json.decode(response.body)["data"];
 
       for (var element in todoListJson) {
         todoList.add(TodoModel.fromJson(element));
@@ -74,7 +75,7 @@ class TodoRemoteDataSourceImpl implements TodoRemoteDataSource {
   @override
   Future<TodoModel> updateTask(String todoId, TodoModel todoModel) async {
     final http.Response response = await client.put(
-      Uri.parse('https://test/todos/${todoModel.id}'),
+      Uri.parse('${ApiEndpoints.BASE_URL}/${todoModel.id}'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(todoModel.toJson()),
     );
@@ -92,7 +93,7 @@ class TodoRemoteDataSourceImpl implements TodoRemoteDataSource {
   @override
   Future<void> deleteTask(String todoId) async {
     final http.Response response = await client.delete(
-      Uri.parse('https://test/todos/$todoId'),
+      Uri.parse('${ApiEndpoints.BASE_URL}/$todoId'),
       headers: {'Content-Type': 'application/json'},
     );
 

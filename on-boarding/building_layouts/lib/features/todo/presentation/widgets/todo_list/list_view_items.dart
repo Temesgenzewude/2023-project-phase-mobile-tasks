@@ -1,21 +1,14 @@
+import 'package:building_layouts/core/entities/todo_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TaskItem extends StatelessWidget {
-  const TaskItem({
-    super.key,
-    required this.leading,
-    required this.title,
-    required this.subtitle,
-    required this.trailingColor,
-  });
-  final String leading;
-  final String title;
-  final String subtitle;
-  final Color trailingColor;
+  const TaskItem({super.key, required this.todoEntity});
+  final TodoEntity todoEntity;
 
   @override
   Widget build(BuildContext context) {
+    print(todoEntity.status); 
     return Container(
       margin: EdgeInsets.only(left: 15.w, right: 15.w, bottom: 15.h),
       decoration: BoxDecoration(
@@ -50,7 +43,7 @@ class TaskItem extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  leading,
+                  todoEntity.title[0],
                   style: TextStyle(
                       color: Colors.black,
                       fontFamily: "InterMedium",
@@ -64,7 +57,7 @@ class TaskItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              title,
+              todoEntity.title,
               style: TextStyle(
                   color: Colors.black,
                   fontFamily: "InterSemiBold",
@@ -80,14 +73,18 @@ class TaskItem extends StatelessWidget {
           ],
         ),
         subtitle: Text(
-          subtitle,
+          todoEntity.description,
           style: TextStyle(
               color: Colors.black,
               fontFamily: "InterSemiBold",
               fontSize: 14.sp),
         ),
         trailing: Container(
-          color: trailingColor,
+          color: todoEntity.status == "Completed"
+              ? Colors.green
+              : todoEntity.status == "In Progress"
+                  ? Colors.yellow
+                  : Colors.red,
           height: 50.h,
           width: 4.w,
         ),

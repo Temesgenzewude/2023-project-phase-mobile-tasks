@@ -1,14 +1,16 @@
 [
   {
     "id": "1",
-    "title": "This is a test title 1",
-    "description": "This is a test description 1",
-    "isCompleted": false
+    "title": "Task 8",
+    "description": "complete day 8 task",
+    "status": "In Progress",
+    "dueDate": "10/10/2023"
   },
   {
     "id": "2",
-    "title": "This is a test title 2",
-    "description": "This is a test description 2",
-    "isCompleted": true
+    "title": "Task 2",
+    "description": "complete day 2 task",
+    "status": "Completed",
+    "dueDate": "10/12/2023"
   }
 ]

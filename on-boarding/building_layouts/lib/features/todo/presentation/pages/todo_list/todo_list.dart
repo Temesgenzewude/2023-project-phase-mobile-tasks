@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../widgets/todo_list/listview_items/list_view_items.dart';
+import '../../bloc/todo_bloc.dart';
+import '../../bloc/todo_event.dart';
+import '../../bloc/todo_state.dart';
+import '../../widgets/todo_list/todo_list_widgets.dart';
 
 class TodoListPage extends StatefulWidget {
   const TodoListPage({super.key});
@@ -11,6 +15,12 @@ class TodoListPage extends StatefulWidget {
 }
 
 class _TodoListPageState extends State<TodoListPage> {
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<TodoBloc>(context).add(LoadAllTasksEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,11 +34,11 @@ class _TodoListPageState extends State<TodoListPage> {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Todo List",
+                  Text("Tasks",
                       style: TextStyle(
                           color: Colors.black,
-                          fontSize: 17.sp,
-                          fontFamily: "InterRegular")),
+                          fontSize: 19.sp,
+                          fontFamily: "InterSemiBold")),
                   Icon(Icons.more_vert, color: Colors.black, size: 30.h)
                 ]),
           ),
@@ -46,7 +56,7 @@ class _TodoListPageState extends State<TodoListPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                "Todo List",
+                "Tasks List",
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 16.sp,
@@ -56,40 +66,38 @@ class _TodoListPageState extends State<TodoListPage> {
           ),
         ),
         SizedBox(height: 20.h),
-        Expanded(
-          child: MediaQuery.removePadding(
-            context: context,
-            removeTop: true,
-            child: ListView(
-              scrollDirection: Axis.vertical,
-              children: const [
-                TaskItem(
-                  title: "Task 1",
-                  subtitle: "Description 1",
-                  leading: "U",
-                  trailingColor: Colors.black12,
+        BlocConsumer<TodoBloc, TodoState>(
+          listener: (context, state) {
+            // TODO: implement listener
+          },
+          builder: (context, state) {
+            if (state is LoadingState) {
+              return const LoadingWidget();
+            } else if (state is LoadedAllTasksState) {
+              return Expanded(
+                child: MediaQuery.removePadding(
+                  context: context,
+                  removeTop: true,
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: state.todos.length,
+                    itemBuilder: (context, index) {
+                      return TaskItem(
+                        todoEntity: state.todos[index],
+                      );
+                    },
+                  ),
                 ),
-                TaskItem(
-                  title: "Task 1",
-                  subtitle: "Description 1",
-                  leading: "U",
-                  trailingColor: Colors.black12,
-                ),
-                TaskItem(
-                  title: "Task 1",
-                  subtitle: "Description 1",
-                  leading: "U",
-                  trailingColor: Colors.black12,
-                ),
-                TaskItem(
-                  title: "Task 1",
-                  subtitle: "Description 1",
-                  leading: "U",
-                  trailingColor: Colors.black12,
-                ),
-              ],
-            ),
-          ),
+              );
+            } else if (state is ErrorState) {
+              return DisplayErrorMessage(message: state.message);
+            } else if (state is EmptyState) {
+              return const DisplayEmptyStateMessage();
+            } else {
+              return const DisplayErrorMessage(
+                  message: "Unexpected Error: Unhandled State");
+            }
+          },
         ),
         SizedBox(height: 30.h),
         GestureDetector(

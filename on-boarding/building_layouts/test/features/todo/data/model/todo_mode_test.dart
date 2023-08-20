@@ -11,7 +11,8 @@ void main() {
       id: "1",
       title: "Task 8",
       description: "complete day 8 task",
-      isCompleted: false);
+       status: "In Progress",
+      dueDate: "10/10/2023");
 
   test("should be a subclass of TodoEntity", () async {
     //assert
@@ -22,7 +23,7 @@ void main() {
   test("should return valid TodoModel from json", () async {
     // arrange
     final Map<String, dynamic> jsonMap = await jsonDecode(
-        readJson("features/todo/helpers/dummy_data/todo_dummy_response.json"));
+        readJson("features/todo/helpers/fixtures/todo_dummy_response.json"));
 
     // act
     final result = TodoModel.fromJson(jsonMap);
@@ -41,7 +42,8 @@ void main() {
       "id": "1",
       "title": "Task 8",
       "description": "complete day 8 task",
-      "isCompleted": false
+       "status": "In Progress",
+      "dueDate": "10/10/2023"
     };
     expect(result, equals(expectedJsonMap));
   });

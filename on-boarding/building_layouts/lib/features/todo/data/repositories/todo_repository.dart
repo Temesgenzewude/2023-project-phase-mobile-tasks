@@ -12,7 +12,7 @@ import '../models/todo_model.dart';
 class TodoRepositoryImpl implements TodoRepository {
   final TodoLocalDataSource localDataSource;
   final TodoRemoteDataSource remoteDataSource;
-  final NetworkInfoImpl networkInfo;
+  final NetworkInfo networkInfo;
   TodoRepositoryImpl({
     required this.localDataSource,
     required this.remoteDataSource,
@@ -27,7 +27,8 @@ class TodoRepositoryImpl implements TodoRepository {
           id: todoEntity.id,
           title: todoEntity.title,
           description: todoEntity.description,
-          isCompleted: todoEntity.isCompleted,
+          status: todoEntity.status,
+          dueDate: todoEntity.dueDate,
         );
         final remoteTask = await remoteDataSource.createTask(todoModel);
         localDataSource.cacheTask(remoteTask.id, remoteTask);
@@ -87,7 +88,8 @@ class TodoRepositoryImpl implements TodoRepository {
       id: todoEntity.id,
       title: todoEntity.title,
       description: todoEntity.description,
-      isCompleted: todoEntity.isCompleted,
+      status: todoEntity.status,
+      dueDate: todoEntity.dueDate,
     );
     if (await networkInfo.isConnected) {
       try {
