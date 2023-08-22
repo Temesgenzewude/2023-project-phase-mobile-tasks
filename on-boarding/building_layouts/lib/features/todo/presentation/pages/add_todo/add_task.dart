@@ -1,6 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../widgets/add_todo_widgets/add_todo_widgets.dart';
 
 class AddTaskPage extends StatefulWidget {
   const AddTaskPage({super.key});
@@ -13,32 +15,15 @@ class _AddTaskPageState extends State<AddTaskPage> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _dueDateController = TextEditingController();
+
+  final List<String> _status = ["Not Started", "Completed", "In Progress"];
+  String _selectedStatus = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        Container(
-          margin: EdgeInsets.only(top: 50.h, left: 15.w, right: 15.w),
-          child: SizedBox(
-            height: 42.h,
-            width: 364.w,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      color: const Color(0xFFEE6F57),
-                      size: 30.h,
-                    ),
-                  ),
-                  Icon(Icons.more_vert, color: Colors.black, size: 30.h)
-                ]),
-          ),
-        ),
+        buildAppBar(context),
         SizedBox(height: 10.h),
         Text("Create new task",
             style: TextStyle(
@@ -57,178 +42,34 @@ class _AddTaskPageState extends State<AddTaskPage> {
         Expanded(
             child: SingleChildScrollView(
           child: Column(children: [
-            Container(
-              margin: EdgeInsets.only(left: 15.w, right: 15.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "Main task name",
-                    style: TextStyle(
-                        color: const Color(0xFFEE6F57),
-                        fontSize: 16.sp,
-                        fontFamily: "InterSemiBold"),
-                  ),
-                ],
-              ),
+            const Headline(
+              text: "Title",
             ),
             SizedBox(height: 7.h),
-            Container(
-              margin: EdgeInsets.only(left: 15.w, right: 15.w),
-              padding: EdgeInsets.only(left: 10.w, right: 10.w),
-              height: 70.h,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 2,
-                      offset: const Offset(1, 1), // changes position of shadow
-                    ),
-                  ],
-                  color: const Color(0xFFFFFFFF)),
-              child: TextField(
-                controller: _titleController,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14.sp,
-                    fontFamily: "InterSemibold"),
-                decoration: InputDecoration(
-                  hintText: "Enter task name",
-                  hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 14.sp,
-                      fontFamily: "InterRegular"),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                  fillColor: const Color(0xFFFFFFFF),
-                ),
-              ),
-            ),
+            CustomTextField(
+                controller: _titleController, hintText: "Enter title"),
             SizedBox(height: 15.h),
-            Container(
-              margin: EdgeInsets.only(left: 15.w, right: 15.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "Due date",
-                    style: TextStyle(
-                        color: const Color(0xFFEE6F57),
-                        fontSize: 16.sp,
-                        fontFamily: "InterSemiBold"),
-                  ),
-                ],
-              ),
+            const Headline(
+              text: "Due Date",
             ),
             SizedBox(height: 7.h),
-            Container(
-              margin: EdgeInsets.only(left: 15.w, right: 15.w),
-              padding: EdgeInsets.only(left: 10.w, right: 10.w),
-              height: 70.h,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 2,
-                      offset: const Offset(1, 1), // changes position of shadow
-                    ),
-                  ],
-                  color: const Color(0xFFFFFFFF)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 300.w,
-                    child: TextField(
-                      controller: _dueDateController,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14.sp,
-                          fontFamily: "InterSemiBold"),
-                      decoration: InputDecoration(
-                        hintText: "Enter due date",
-                        hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14.sp,
-                            fontFamily: "InterRegular"),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                        ),
-                        fillColor: const Color(0xFFFFFFFF),
-                      ),
-                    ),
-                  ),
-                  Icon(Icons.calendar_today_outlined,
-                      color: const Color(0xFFEE6F57), size: 30.h)
-                ],
-              ),
-            ),
+            CustomTextField(
+                controller: _dueDateController, hintText: "Enter due date"),
+
             SizedBox(height: 25.h),
-            Container(
-              margin: EdgeInsets.only(left: 15.w, right: 15.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "Description",
-                    style: TextStyle(
-                        color: const Color(0xFFEE6F57),
-                        fontSize: 16.sp,
-                        fontFamily: "InterSemiBold"),
-                  ),
-                ],
-              ),
+            const Headline(
+              text: "Description",
             ),
             SizedBox(height: 7.h),
-            Container(
-              margin: EdgeInsets.only(left: 15.w, right: 15.w),
-              padding: EdgeInsets.only(left: 10.w, right: 10.w),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 2,
-                      offset: const Offset(1, 1), // changes position of shadow
-                    ),
-                  ],
-                  color: const Color(0xFFFFFFFF)),
-              child: TextField(
+            CustomTextField(
                 controller: _descriptionController,
-                minLines: 1,
-                maxLines: 5,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14.sp,
-                    fontFamily: "InterMedium"),
-                decoration: InputDecoration(
-                  hintText: "Enter description",
-                  hintStyle: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 14.sp,
-                      fontFamily: "InterRegular"),
-                  border: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                  fillColor: const Color(0xFFFFFFFF),
-                ),
-              ),
-            ),
+                hintText: "Enter description"),
+
+            // dropdown for task status: pending, in progress, completed
+
+            SizedBox(height: 25.h),
+            buildDropdown(),
+
             GestureDetector(
               onTap: () {
                 // TodoModel todo = TodoModel(
@@ -263,5 +104,80 @@ class _AddTaskPageState extends State<AddTaskPage> {
         )),
       ]),
     );
+  }
+
+  Container buildDropdown() {
+    return Container(
+            margin: EdgeInsets.only(left: 15.w, right: 15.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  "Status",
+                  style: TextStyle(
+                      color: const Color(0xFFEE6F57),
+                      fontSize: 16.sp,
+                      fontFamily: "InterSemiBold"),
+                ),
+                SizedBox(width: 20.w),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.only(left: 10.w, right: 10.w),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                            offset: const Offset(
+                                1, 1), // changes position of shadow
+                          ),
+                        ],
+                        color: const Color(0xFFFFFFFF)),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        alignment: AlignmentDirectional.center,
+                        hint: Text(
+                          "Select task status",
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14.sp,
+                              fontFamily: "InterRegular"),
+                        ),
+                        icon: const Icon(Icons.arrow_drop_down,
+                            color: Color(0xFFEE6F57)),
+                        iconSize: 30.h,
+                        // isExpanded: true,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.sp,
+                            fontFamily: "InterMedium"),
+                        value: _selectedStatus.isNotEmpty
+                            ? _selectedStatus
+                            : null,
+                        onChanged: (newValue) {
+                          setState(() {
+                            _selectedStatus = newValue ?? "";
+                          });
+                        },
+                        items: _status.map((status) {
+                          return DropdownMenuItem(
+                            alignment: AlignmentDirectional.center,
+                            value: status,
+                            child: Text(status,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 14.sp,
+                                    fontFamily: "InterRegular")),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
   }
 }

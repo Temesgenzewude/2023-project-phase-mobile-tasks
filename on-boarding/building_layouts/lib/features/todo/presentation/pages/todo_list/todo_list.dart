@@ -101,7 +101,9 @@ class _TodoListPageState extends State<TodoListPage> {
         ),
         SizedBox(height: 30.h),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, '/add_task');
+          },
           child: Container(
             height: 50.h,
             width: 256.w,

@@ -23,6 +23,9 @@ class TaskItem extends StatelessWidget {
             ),
           ]),
       child: ListTile(
+        onTap: () {
+          Navigator.pushNamed(context, "/task_detail", arguments: todoEntity);
+        },
         leading: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
